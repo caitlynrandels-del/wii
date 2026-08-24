@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="all">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=600, height=600, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#000000">
+<title>Oroboro</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{
+    width:600px;
+    height:600px;
+    overflow:hidden;
+    background:#000000;
+    color:#ffffff;
+    font-family:system-ui,-apple-system,sans-serif;
+    font-size:20px;
+    user-select:none;
+  }
+  #app{
+    width:600px;
+    height:600px;
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  h1{font-size:24px;font-weight:800;letter-spacing:-0.5px}
+ .card{
+    width:100%;
+    height:96px;
+    background:#111111;
+    border:2px solid #ffffff;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    padding:0 22px;
+    font-size:20px;
+  }
+ .card.focused{
+    background:#ffffff;
+    color:#000000;
+  }
+ .footer{
+    margin-top:auto;
+    font-size:14px;
+    opacity:0.6;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>OROBORO</h1>
+  <div class="card focused" data-a="1">01 - Dashboard</div>
+  <div class="card" data-a="2">02 - Widgets</div>
+  <div class="card" data-a="3">03 - System</div>
+  <div class="footer">D-PAD to move • ENTER to select</div>
+</div>
+<script>
+  const cards=[...document.querySelectorAll('.card')];
+  let idx=0;
+  const update=()=>cards.forEach((c,k)=>c.classList.toggle('focused',k===idx));
+  document.addEventListener('keydown',(e)=>{
+    if(e.key==='ArrowDown'){idx=Math.min(idx+1,cards.length-1);update();}
+    if(e.key==='ArrowUp'){idx=Math.max(idx-1,0);update();}
+    if(e.key==='Enter'){cards[idx].textContent='Selected: '+cards[idx].dataset.a;}
+    e.preventDefault();
+  });
+  // tap to test on phone
+  cards.forEach((c,k)=>c.addEventListener('click',()=>{idx=k;update();}));
+</script>
+</body>
+</html>
